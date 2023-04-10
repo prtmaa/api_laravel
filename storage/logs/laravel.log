@@ -1,0 +1,16 @@
+[2023-04-10 20:03:46] local.ERROR: Command "model:posts" is not defined.
+
+Did you mean one of these?
+    model:prune
+    model:show {"exception":"[object] (Symfony\\Component\\Console\\Exception\\CommandNotFoundException(code: 0): Command \"model:posts\" is not defined.
+
+Did you mean one of these?
+    model:prune
+    model:show at C:\\xampp\\htdocs\\api_laravel\\vendor\\symfony\\console\\Application.php:702)
+[stacktrace]
+#0 C:\\xampp\\htdocs\\api_laravel\\vendor\\symfony\\console\\Application.php(256): Symfony\\Component\\Console\\Application->find('model:posts')
+#1 C:\\xampp\\htdocs\\api_laravel\\vendor\\symfony\\console\\Application.php(168): Symfony\\Component\\Console\\Application->doRun(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#2 C:\\xampp\\htdocs\\api_laravel\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\Console\\Kernel.php(200): Symfony\\Component\\Console\\Application->run(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#3 C:\\xampp\\htdocs\\api_laravel\\artisan(37): Illuminate\\Foundation\\Console\\Kernel->handle(Object(Symfony\\Component\\Console\\Input\\ArgvInput), Object(Symfony\\Component\\Console\\Output\\ConsoleOutput))
+#4 {main}
+"} 
