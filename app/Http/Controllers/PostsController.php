@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\PostsDetailResource;
+use App\Http\Resources\PostsResource;
 use App\Models\Posts;
 use Illuminate\Http\Request;
 
@@ -13,7 +15,8 @@ class PostsController extends Controller
     public function index()
     {
         $posts = Posts::all();
-        return response()->json($posts);
+        // return response()->json(['data' => $posts]);
+        return PostsResource::collection($posts);
     }
 
     /**
@@ -35,9 +38,10 @@ class PostsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Posts $posts)
+    public function show($id)
     {
-        //
+        $post = Posts::with('writer:id,username')->findOrFail($id);
+        return new PostsDetailResource($post);
     }
 
     /**

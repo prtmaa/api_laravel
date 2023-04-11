@@ -5,3 +5,4 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/posts', [PostsController::class, 'index']);
+Route::get('/posts/{id}', [PostsController::class, 'show']);
