@@ -17,7 +17,7 @@ class PostsController extends Controller
     {
         $posts = Posts::all();
         // return response()->json(['data' => $posts]);
-        return PostsDetailResource::collection($posts->loadMissing('writer:id,username'));
+        return PostsDetailResource::collection($posts->loadMissing(['writer:id,username', 'comments:id,post_id,user_id,comments_content']));
     }
 
     /**
@@ -50,7 +50,7 @@ class PostsController extends Controller
     public function show($id)
     {
         $post = Posts::with('writer:id,username')->findOrFail($id);
-        return new PostsDetailResource($post->loadMissing('writer:id,username'));
+        return new PostsDetailResource($post->loadMissing(['writer:id,username', 'comments:id,post_id,user_id,comments_content']));
     }
 
     /**
