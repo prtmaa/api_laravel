@@ -7,6 +7,7 @@ use App\Http\Resources\PostsResource;
 use App\Models\Posts;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 class PostsController extends Controller
 {
@@ -33,14 +34,32 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
+
         $request->validate([
             'title' => 'required|max:255',
             'news_content' => 'required',
         ]);
 
-        $request['author'] = Auth::user()->id;
+        $post = new Posts();
+        $post->title = $request->title;
+        $post->news_content = $request->news_content;
+        $post->author = Auth::user()->id;
 
-        $post = Posts::create($request->all());
+
+        if ($request->hasFile('image')) {
+            File::delete($post->image);
+            $file = $request->file('image');
+            $nama = 'post-' . date('YmdHis') . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('/img'), $nama);
+
+            $post->image = "img/$nama";
+        }
+
+        $post->save();
+
+        // $request['author'] = Auth::user()->id;
+
+        // $post = Posts::create($request->all());
         return new PostsDetailResource($post->loadMissing('writer:id,username'));
     }
 
@@ -72,7 +91,19 @@ class PostsController extends Controller
         ]);
 
         $post = Posts::findOrFail($id);
-        $post->update($request->all());
+        $post->title = $request->title;
+        $post->news_content = $request->news_content;
+
+        if ($request->hasFile('image')) {
+            File::delete($post->image);
+            $file = $request->file('image');
+            $nama = 'post-' . date('YmdHis') . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('/img'), $nama);
+
+            $post->image = "img/$nama";
+        }
+
+        $post->update();
         return new PostsDetailResource($post->loadMissing('writer:id,username'));
     }
 
